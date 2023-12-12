@@ -54,39 +54,59 @@ foreach ($karyawanData as $karyawan) {
 <body>
     <h1>Sistem Gaji Karyawan</h1>
 
+    <h4>Masukkan Jam Lembur</h4>
     <form method="post" action="<?php echo $_SERVER["PHP_SELF"]; ?>">
         <table>
-            <thead>
+        <thead>
+            <tr>
+                <th>NIK</th>
+                <th>Nama Karyawan</th>
+                <th>Upah Per Jam</th>
+                <th>Jam Lembur</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($karyawanData as $karyawan): ?>
                 <tr>
-                    <th>NIK</th>
-                    <th>Nama Karyawan</th>
-                    <th>Upah Per Jam</th>
-                    <th>Jam Kerja</th>
-                    <th>Upah Lembur</th>
-                    <th>Jam Lembur</th>
-                    <?php for ($mingguKe = 1; $mingguKe <= 5; $mingguKe++): ?>
-                        <th>Minggu Ke-<?php echo $mingguKe; ?></th>
-                    <?php endfor; ?>
+                    <td><?php echo $karyawan->nik; ?></td>
+                    <td><?php echo $karyawan->nama; ?></td>
+                    <td><?php echo "Rp." . number_format($karyawan->upah_per_jam, 0, ',', '.'); ?></td>
                 </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($karyawanData as $karyawan): ?>
-                    <tr>
-                        <td><?php echo $karyawan->nik; ?></td>
-                        <td><?php echo $karyawan->nama; ?></td>
-                        <td><?php echo "Rp." . number_format($karyawan->upah_per_jam, 0, ',', '.'); ?></td>
-                        <td><?php echo $karyawan->jam_kerja; ?></td>
-                        <td><?php echo "Rp." . number_format($karyawan->hitungUpahLembur(), 0, ',', '.'); ?></td>
-                        <td><input type="number" name="jamLembur_<?php echo $karyawan->nik; ?>" value="<?php echo $karyawan->jam_lembur; ?>"></td>
-                        <?php for ($mingguKe = 1; $mingguKe <= 5; $mingguKe++): ?>
-                            <td><?php echo "Rp." . number_format($rekapMingguan[$karyawan->nik][$mingguKe], 0, ',', '.'); ?></td>
-                        <?php endfor; ?>
-                    </tr>
-                <?php endforeach; ?>
-            </tbody>
+                <tr>
+                    <td colspan="3"></td>
+                    <td><input type="number" name="jamLembur_<?php echo $karyawan->nik; ?>" value="<?php echo $karyawan->jam_lembur; ?>"></td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
         </table>
 
         <button type="submit">Lihat Gaji</button>
+
+    <h4>Rekap Gaji Mingguan</h4>
+    <form method="post" action="<?php echo $_SERVER["PHP_SELF"]; ?>">
+        <table>
+        <thead>
+            <tr>
+                <th>Minggu Ke-1</th>
+                <th>Minggu Ke-2</th>
+                <th>Minggu Ke-3</th>
+                <th>Minggu Ke-4</th>
+                <th>Minggu Ke-5</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($karyawanData as $karyawan): ?>
+                <tr>
+                    <?php for ($mingguKe = 1; $mingguKe <= 5; $mingguKe++): ?>
+                        <td><?php echo "Rp." . number_format($rekapMingguan[$karyawan->nik][$mingguKe], 0, ',', '.'); ?></td>
+                    <?php endfor; ?>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+        </table>
+
+
+
     </form>
 </body>
 </html>
