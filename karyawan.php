@@ -3,8 +3,6 @@ class Karyawan{
     public $nik;
     public $nama;
     public $upah_per_jam;
-    public $jam_kerja;
-    public $jam_lembur;
 
     public function __construct($nik, $nama, $upah_per_jam, $jam_kerja, $jam_lembur)
     {
